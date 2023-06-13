@@ -17,13 +17,7 @@ export const transactionsSlice = createSlice({
     initialState: [] as Transaction[],
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(listTransactionsAction.pending, () => {
-            console.log("listTransactions iniciou...");
-        });
-
         builder.addCase(listTransactionsAction.fulfilled, (_, action) => {
-            console.log("Finalizou");
-
             return action.payload.data?.transactions ?? [];
         });
     },

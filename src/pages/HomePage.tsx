@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { TransactionsList } from "../components/TransactionsList";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { listTransactionsAction } from "../store/modules/transactions.slice";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../store";
 
 export const HomePage = () => {
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
 
+    const user = useSelector((state: RootState) => state.user);
+
     const [erro, setErro] = useState(undefined);
 
     const listApi = async () => {
-        const id = "3c7f047b-53b3-4205-bbb7-678a3476d685";
-
         const result = await dispatch(
             listTransactionsAction({
-                id,
+                id: user.id,
             })
         );
 
@@ -32,12 +33,19 @@ export const HomePage = () => {
     };
 
     useEffect(() => {
+        const isUserLogged = !!user.id;
+
+        if (!isUserLogged) {
+            navigate("/login");
+            return;
+        }
+
         listApi();
     }, []);
 
     return (
         <React.Fragment>
-            <h1>Bem vindo, Daphne</h1>
+            <h1>Bem vindo, {user.name}</h1>
             <hr />
             <TransactionsList />
             {erro && <p style={{ color: "red" }}>Erro: {erro}</p>}

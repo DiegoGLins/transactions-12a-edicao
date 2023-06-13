@@ -4,7 +4,6 @@ import { TransactionsTable } from "./TransactionsTable";
 
 export const TransactionsList = () => {
     const transactions = useSelector((state: RootState) => state.transactions);
-    console.log(transactions);
 
     return (
         <div>
