@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listTransactionsAction } from "../store/modules/transactions.slice";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
+import { TransactionType } from "../models/transaction.model";
 
 export const HomePage = () => {
     const dispatch = useDispatch<any>();
@@ -17,6 +18,7 @@ export const HomePage = () => {
         const result = await dispatch(
             listTransactionsAction({
                 id: user.id,
+                type: TransactionType.Income,
             })
         );
 
